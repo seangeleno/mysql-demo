@@ -53,6 +53,7 @@ var displayForSale = function() {
 			element.price = green + '$' + element.price + reset;
 
 		});
+
 		console.log(columnify(data));
 		console.log('\n');
 
@@ -61,10 +62,9 @@ var displayForSale = function() {
 				type: 'input',
 				name: 'id',
 				message: 'ID of item to buy',
-				choices: choices,
 				validate: function(input) {
 
-					if(input >= 1 && input <= 14) return true;
+					if(input >= 1 && input <= 99) return true;
 						else 
 							return('Not a valid ID. Try again sucka.');
 					}

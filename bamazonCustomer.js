@@ -2,6 +2,16 @@ const sql = require('mysql');
 const columnify = require('columnify');
 const inquire = require('inquirer');
 
+var choices = [];
+
+var green = '\x1b[32m',
+	red = '\x1b[31m',
+	blue = '\x1b[34m',
+	yellow = "\x1b[33m",
+	underscore = "\x1b[4m",
+	reset = "\x1b[0m"
+
+
 var db = sql.createConnection({
 
 	host: '127.0.0.1',
@@ -30,10 +40,19 @@ db.connect(function(err) {
 
 var displayForSale = function() {
 
-	db.query("SELECT item_id, product_name, department_name, price FROM products WHERE stock_quantity > 0",  function(err, data, fields) {
+	process.stdout.write('\033c');
+
+	db.query("SELECT item_id, product_name, department_name, stock_quantity, price FROM products WHERE stock_quantity > 0",  function(err, data, fields) {
 
 		if(err) console.log(err);
-		console.log('\n\n');
+
+		data.forEach(function(element) {
+
+			element.product_name = yellow + element.product_name + reset;
+			element.stock_quantity = red + element.stock_quantity + reset;
+			element.price = green + '$' + element.price + reset;
+
+		});
 		console.log(columnify(data));
 		console.log('\n');
 
@@ -42,34 +61,88 @@ var displayForSale = function() {
 				type: 'input',
 				name: 'id',
 				message: 'ID of item to buy',
+				choices: choices,
 				validate: function(input) {
 
 					if(input >= 1 && input <= 14) return true;
-						else return('Not a valid ID');
+						else 
+							return('Not a valid ID. Try again sucka.');
 					}
 			},
 			{
 				type: 'input',
-				name: 'num',
+				name: 'toPurchase',
 				message: 'Number to purchase',
 				default: 1,
 				validate: function(input) {
 
 					if(input >= 1 && input <= 99) return true;
-						else return('Not a valid number. Max number 99.');
+
+						else return('Come on man, thats not a valid number. Max number is 99.');
 				} 
 			}
 
 
 		]).then(function(answers) {
 
-			console.log(answers);
+			db.query("SELECT stock_quantity, price, product_name FROM products WHERE item_id = ?", [answers.id], function(err, data, fields) {
+
+				var available = data[0].stock_quantity;
+				var toPurchase = answers.toPurchase;
+				var price = data[0].price;
+				var title = data[0].product_name;
+
+				if(toPurchase <= available) {
+
+					db.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?", [available-toPurchase, answers.id], function(err, res, fields) {
+
+						if(!err) {
+
+							var total = toPurchase * price;
+							console.log('\n' + toPurchase + ' copy(ies) of ' + underscore + yellow + title + reset + ' purchased. Your total is ' + green + '$' + total + reset + '\n');
+					
+							inquire.prompt([{
+							
+								type: 'list',
+								name: 'again',
+								message: 'Make another purchase?',
+								choices: ['Sure', 'Nope']
+							
+							}]).then(function(answer) {
+
+								if(answer.again === 'Sure') displayForSale();
+
+									else {
+
+										console.log('\nNice doing business with you! Goodbye.\n');
+										
+										process.exit();
+
+									}
+							})
+						}
+					})
+				} else {
+
+					displayForSale();
+
+					console.log(red + '\nNot enough in stock! Try again punk!\n' + reset);
+
+				}
+
+			})
+
+
 
 		})
 
 	});
 
-
-
 }
+
+
+
+
+
+
 

@@ -4,7 +4,7 @@
 
 Viewing all items int the db:
 
-![view of all items](https://github.com/gwilken/mysql-demo/tree/master/screenshots/printitems.jpg "View items")
+![view of all items](https://github.com/gwilken/mysql-demo/blob/master/screenshots/printitems.jpg "View items")
 
 Customer buys an item:
 
@@ -14,13 +14,13 @@ Customer buys an item:
 
 View low inventory
 
-![view low](https://github.com/gwilken/mysql-demo/blob/master/screenshots/viewlow.tiff "View Low Inventory")
+![view low](https://github.com/gwilken/mysql-demo/blob/master/screenshots/viewlow.jpg "View Low Inventory")
 
 Add a product
 
-![add product](https://github.com/gwilken/mysql-demo/blob/master/screenshots/addproduct.tiff "Add product")
+![add product](https://github.com/gwilken/mysql-demo/blob/master/screenshots/addproduct.jpg "Add product")
 
 #Supervisor Mode:
 
-![supervisor view](https://github.com/gwilken/mysql-demo/blob/master/screenshots/supervisor.tiff "Supervisor View")
+![supervisor view](https://github.com/gwilken/mysql-demo/blob/master/screenshots/supervisor.jpg "Supervisor View")
 

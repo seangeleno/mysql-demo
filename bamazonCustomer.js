@@ -82,15 +82,15 @@ var displayForSale = function() {
 				} 
 			}
 
-
 		]).then(function(answers) {
 
-			db.query("SELECT stock_quantity, price, product_name FROM products WHERE item_id = ?", [answers.id], function(err, data, fields) {
+			db.query("SELECT stock_quantity, price, product_name, department_name FROM products WHERE item_id = ?", [answers.id], function(err, data, fields) {
 
 				var available = data[0].stock_quantity;
 				var toPurchase = answers.toPurchase;
 				var price = data[0].price;
 				var title = data[0].product_name;
+				var department_name = data[0].department_name;
 
 				if(toPurchase <= available) {
 
@@ -101,6 +101,39 @@ var displayForSale = function() {
 							var total = toPurchase * price;
 							console.log('\n' + toPurchase + ' copy(ies) of ' + underscore + yellow + title + reset + ' purchased. Your total is ' + green + '$' + total + reset + '\n');
 					
+							db.query("SELECT product_sales FROM departments WHERE department_name = ?", [department_name], function(err, data) {
+
+								if(err) console.log(err);
+
+								var newTotal = data[0].product_sales + total;
+
+								db.query("UPDATE departments SET product_sales = ? WHERE department_name = ?", [newTotal, department_name], function(err) {
+
+									if(err) console.log(err);
+
+								})
+
+							})
+
+
+							// if(department_name === 'Books') var d_id = 1;
+							// if(department_name === 'Music') var d_id = 2;
+
+							// var record = {
+
+							// 	department_id: d_id,
+							// 	department_name: department_name,
+							// 	product_sales: total
+
+							// }
+
+							// db.query("UPDATE departments SET ?", [record], function(err, data, fields) {
+							
+							// 	if(err) console.log(err);
+							
+							// })
+
+
 							inquire.prompt([{
 							
 								type: 'list',

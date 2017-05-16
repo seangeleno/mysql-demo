@@ -125,7 +125,7 @@ var managerView = function() {
 								}
 									
 									else {
-										console.log('updated');
+										console.log('Inventory updated.');
 
 										managerView();
 									}
@@ -134,6 +134,56 @@ var managerView = function() {
 
 					});
 				};
-	});
-}
+	
+				if(answers.response === 'Add New Product') {
 
+
+					inquire.prompt([{
+						type: 'input',
+						name: 'id',
+						message: 'Item Id: '
+					},
+					{
+						type: 'input',
+						name: 'product',
+						message: 'Product name: '
+					},
+					{
+						type: 'input',
+						name: 'num',
+						message: 'Number to add to inventory: '
+					},
+					{
+						type: 'input',
+						name: 'department',
+						message: 'Department to add to: '
+					},
+					{
+						type: 'input',
+						name: 'price',
+						message: 'Price: '
+					}]).then(function(answers) {
+
+						var record = {
+							item_id: answers.id,
+							product_name: answers.product,
+							department_name: answers.department,
+							stock_quantity: answers.num,
+							price: answers.price
+						}
+
+						db.query("INSERT INTO products SET ?", [record],  function(err, data, fields) {
+
+							if(err) console.log(err);
+
+							console.log('Item Added!');
+
+							managerView();
+
+						});
+
+					});
+
+				};
+			});
+}

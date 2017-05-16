@@ -1,8 +1,8 @@
 # mysql-demo
 
-##A simple command line demo using Node.js to connect to and alter a SQL database.
+## A simple command line demo using Node.js to connect to and alter a SQL database.
 
-Viewing all items int the db:
+Viewing all items in the db:
 
 ![view of all items](https://github.com/gwilken/mysql-demo/blob/master/screenshots/printitems.jpg "View items")
 

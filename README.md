@@ -4,7 +4,7 @@
 
 Viewing all items int the db:
 
-![view of all items](https://github.com/gwilken/mysql-demo/screenshots/printitems.tiff "View items")
+![view of all items](https://github.com/gwilken/mysql-demo/tree/master/screenshots/printitems.tiff "View items")
 
 Customer buys an item:
 

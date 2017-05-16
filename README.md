@@ -4,11 +4,11 @@
 
 Viewing all items int the db:
 
-![view of all items](https://github.com/gwilken/mysql-demo/tree/master/screenshots/printitems.tiff "View items")
+![view of all items](https://github.com/gwilken/mysql-demo/tree/master/screenshots/printitems.jpg "View items")
 
 Customer buys an item:
 
-![buy an item](https://github.com/gwilken/mysql-demo/blob/master/screenshots/buyitem.tiff "Buy items")
+![buy an item](https://github.com/gwilken/mysql-demo/blob/master/screenshots/buyitem.jpg "Buy items")
 
 #Manager Mode:
 

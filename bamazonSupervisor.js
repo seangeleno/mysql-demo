@@ -43,8 +43,8 @@ var superView = function() {
 
 	db.query("SELECT id, department_id, department_name, over_head_costs, product_sales FROM departments", function(err, data) {
 
-		data[0].profit = data[0].product_sales - data[0].over_head_costs;
-		data[1].profit = data[1].product_sales - data[1].over_head_costs;
+		data[0].profit = (data[0].product_sales - data[0].over_head_costs).toFixed(2);
+		data[1].profit = (data[1].product_sales - data[1].over_head_costs).toFixed(2);
 
 		data.forEach(function(element) {
 

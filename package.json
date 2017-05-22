@@ -1,0 +1,25 @@
+{
+  "name": "mysql-demo",
+  "version": "1.0.0",
+  "description": "## A simple command line demo using Node.js to connect to and alter a SQL database.",
+  "main": "bamazonCustomer.js",
+  "dependencies": {
+    "columnify": "^1.5.4",
+    "inquirer": "^3.0.6",
+    "mysql": "^2.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seangeleno/mysql-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seangeleno/mysql-demo/issues"
+  },
+  "homepage": "https://github.com/seangeleno/mysql-demo#readme"
+}

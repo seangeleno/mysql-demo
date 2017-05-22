@@ -9,7 +9,7 @@ var green = '\x1b[32m',
 	blue = '\x1b[34m',
 	yellow = "\x1b[33m",
 	underscore = "\x1b[4m",
-	reset = "\x1b[0m"
+	reset = "\x1b[0m";
 
 
 var db = sql.createConnection({
@@ -18,7 +18,7 @@ var db = sql.createConnection({
 	port: 3306,
 
 	user: 'root',
-	password: 'violet',
+    password: process.env.MYSQL,
 
 	database: 'bamazon'
 });
@@ -26,13 +26,13 @@ var db = sql.createConnection({
 db.connect(function(err) {
 
 	if(err) {
-	
+
 		console.log('Error at sql connection:', err);
-		process.exit();	
-	
+		process.exit();
+
 	}
 		else {
-		
+
 			console.log('connected to SQL as Id:', sql.threadId);
 			process.stdout.write('\033c');
 			superView();
@@ -48,10 +48,13 @@ var superView = function() {
 
 		data.forEach(function(element) {
 
-			element.department_name = blue + element.department_name + reset;
-			element.over_head_costs = yellow + element.over_head_costs + reset;
-			element.product_sales = yellow + '$' + element.product_sales + reset;
-	
+			//noinspection JSUndefinedPropertyAssignment
+            element.department_name = blue + element.department_name + reset;
+			//noinspection JSUndefinedPropertyAssignment
+            element.over_head_costs = yellow + element.over_head_costs + reset;
+			//noinspection JSUndefinedPropertyAssignment
+            element.product_sales = yellow + '$' + element.product_sales + reset;
+
 			if(element.profit > 0) element.profit = green + element.profit + reset;
 
 			if(element.profit < 0) element.profit = red + element.profit + reset;
@@ -64,4 +67,4 @@ var superView = function() {
 
 	})
 
-}
+};

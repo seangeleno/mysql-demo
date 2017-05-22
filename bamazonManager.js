@@ -9,7 +9,7 @@ var green = '\x1b[32m',
 	blue = '\x1b[34m',
 	yellow = "\x1b[33m",
 	underscore = "\x1b[4m",
-	reset = "\x1b[0m"
+	reset = "\x1b[0m";
 
 
 var db = sql.createConnection({
@@ -18,7 +18,7 @@ var db = sql.createConnection({
 	port: 3306,
 
 	user: 'root',
-	password: 'violet',
+    password: process.env.MYSQL,
 
 	database: 'bamazon'
 });
@@ -37,7 +37,7 @@ db.connect(function(err) {
 			process.stdout.write('\033c');
 			managerView();
 		}
-})
+});
 
 var managerView = function() {
 
@@ -170,7 +170,7 @@ var managerView = function() {
 							department_name: answers.department,
 							stock_quantity: answers.num,
 							price: answers.price
-						}
+						};
 
 						db.query("INSERT INTO products SET ?", [record],  function(err, data, fields) {
 
@@ -186,4 +186,4 @@ var managerView = function() {
 
 				};
 			});
-}
+};

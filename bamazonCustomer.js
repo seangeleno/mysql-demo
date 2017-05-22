@@ -1,15 +1,15 @@
 const sql = require('mysql');
 const columnify = require('columnify');
 const inquire = require('inquirer');
-
+// UNSED VARIABLES CHOICES
 var choices = [];
-
+// UNSED VARIABLES BLUE
 var green = '\x1b[32m',
 	red = '\x1b[31m',
 	blue = '\x1b[34m',
 	yellow = "\x1b[33m",
 	underscore = "\x1b[4m",
-	reset = "\x1b[0m"
+	reset = "\x1b[0m";
 
 
 var db = sql.createConnection({
@@ -18,7 +18,7 @@ var db = sql.createConnection({
 	port: 3306,
 
 	user: 'root',
-	password: 'violet',
+	password: process.env.MYSQL,
 
 	database: 'bamazon'
 });
@@ -36,21 +36,24 @@ db.connect(function(err) {
 			console.log('connected to SQL as Id:', sql.threadId);
 			displayForSale();
 		}
-})
+});
 
 var displayForSale = function() {
 
 	process.stdout.write('\033c');
-
+	// UNUSED PARAMETER FIELDS
 	db.query("SELECT item_id, product_name, department_name, stock_quantity, price FROM products WHERE stock_quantity > 0",  function(err, data, fields) {
 
 		if(err) console.log(err);
 
 		data.forEach(function(element) {
 
-			element.product_name = yellow + element.product_name + reset;
-			element.stock_quantity = red + element.stock_quantity + reset;
-			element.price = green + '$' + element.price + reset;
+			//noinspection JSUndefinedPropertyAssignment
+            element.product_name = yellow + element.product_name + reset;
+			//noinspection JSUndefinedPropertyAssignment
+            element.stock_quantity = red + element.stock_quantity + reset;
+			//noinspection JSUndefinedPropertyAssignment
+            element.price = green + '$' + element.price + reset;
 
 		});
 
@@ -83,7 +86,7 @@ var displayForSale = function() {
 			}
 
 		]).then(function(answers) {
-
+			// UNSED PARAMETER FIELDS
 			db.query("SELECT stock_quantity, price, product_name, department_name FROM products WHERE item_id = ?", [answers.id], function(err, data, fields) {
 
 				var available = data[0].stock_quantity;
@@ -93,7 +96,7 @@ var displayForSale = function() {
 				var department_name = data[0].department_name;
 
 				if(toPurchase <= available) {
-
+					// UNUSED PARAMTER RES AND FIELDS!
 					db.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?", [available-toPurchase, answers.id], function(err, res, fields) {
 
 						if(!err) {
@@ -113,7 +116,7 @@ var displayForSale = function() {
 
 								})
 
-							})
+							});
 
 
 							// if(department_name === 'Books') var d_id = 1;
@@ -171,7 +174,7 @@ var displayForSale = function() {
 
 	});
 
-}
+};
 
 
 
